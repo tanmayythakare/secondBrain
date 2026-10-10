@@ -1,345 +1,270 @@
-# 🧠 Life OS — Personal Productivity & Knowledge Management
+<div align="center">
 
-> A full-stack web application to manage your tasks, notes, and ideas — with an interactive knowledge graph to visualize connections between your thoughts.
+# SecondBrain
 
----
+**Knowledge Graph and Connected Thought Productivity Platform**
 
-## 📖 Description
+<p align="center">
+  <a href="https://adoptium.net/"><img src="https://img.shields.io/badge/Java-17-orange?style=flat-square&logo=openjdk" alt="Java 17"></a>
+  <a href="https://spring.io/projects/spring-boot"><img src="https://img.shields.io/badge/Spring%20Boot-3.2-brightgreen?style=flat-square&logo=springboot" alt="Spring Boot 3.2"></a>
+  <a href="https://angular.dev/"><img src="https://img.shields.io/badge/Angular-12.2-red?style=flat-square&logo=angular" alt="Angular 12.2"></a>
+  <a href="https://github.com/vasturiano/force-graph"><img src="https://img.shields.io/badge/Graph-Force--Graph-8b5cf6?style=flat-square" alt="Force-Graph"></a>
+  <a href="https://www.postgresql.org/"><img src="https://img.shields.io/badge/PostgreSQL-14+-blue?style=flat-square&logo=postgresql" alt="PostgreSQL"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="MIT License"></a>
+  <a href="#installation-and-setup"><img src="https://img.shields.io/badge/Deployment-Local-informational?style=flat-square" alt="Local Deployment"></a>
+</p>
 
-**Life OS** is a personal productivity platform designed to help you organize your work, capture ideas, and discover connections between them. Whether you're tracking daily tasks, writing notes, or mapping how your ideas relate to each other, Life OS keeps everything in one place.
+<p align="center">
+  A full-stack personal knowledge management platform mapping thoughts into an interactive graph.<br>
+  Connected notes · Bi-directional backlink discovery · Frictionless task lifecycle.
+</p>
 
-The app is built for developers and knowledge workers who want a system that's fast, clean, and actually useful — without the bloat of traditional note-taking tools.
+<p align="center">
+  <a href="#quick-flow">Quick Flow</a> •
+  <a href="#visual-showcase">Visual Showcase</a> •
+  <a href="#system-architecture">Architecture</a> •
+  <a href="#core-architectural-modules">Core Modules</a> •
+  <a href="#installation-and-setup">Setup</a> •
+  <a href="#api-reference">API Reference</a>
+</p>
 
-**Why does it exist?**
-Most productivity apps treat tasks and notes as isolated silos. Life OS connects them — you can link any note to another, and the knowledge graph shows you the bigger picture of your thinking. It's a second brain you can actually navigate.
-
----
-
-## ✨ Features
-
-- 🔐 **User Authentication** — Secure registration and login with JWT tokens
-- ✅ **Task Management** — Create, edit, and delete tasks with inline editing and delete confirmation
-- 📝 **Notes System** — Write and manage notes with full-text search across title and content
-- 🔗 **Note Linking** — Link notes to each other and explore backlinks
-- 🕸️ **Knowledge Graph** — An interactive force-directed graph to visually explore how your notes connect
-- 👥 **Multi-User Support** — Each user's data is fully isolated from others
-- 🔍 **Search** — Filter notes instantly by title or content
-- 📱 **Responsive Design** — Works on desktop and mobile
-
----
-
-## 🛠️ Tech Stack
-
-### Backend
-| Technology | Purpose |
-|---|---|
-| Java 17 | Programming language |
-| Spring Boot 4.0.2 | Backend framework |
-| Spring Security | Authentication & authorization |
-| Spring Data JPA | Database access layer |
-| PostgreSQL | Primary database |
-| JWT (jjwt 0.11.5) | Secure token-based authentication |
-| SpringDoc OpenAPI 2.3.0 | API documentation (Swagger UI) |
-| Lombok | Boilerplate reduction |
-| Maven | Build tool |
-
-### Frontend
-| Technology | Purpose |
-|---|---|
-| Angular 12 | Frontend framework |
-| TypeScript | Programming language |
-| Custom CSS | Styling (CSS variables, responsive) |
-| force-graph | Interactive knowledge graph visualization |
+</div>
 
 ---
 
-## 📋 Prerequisites
-
-Before you begin, make sure you have the following installed on your computer:
-
-- [Java 17+](https://adoptium.net/) — Download and install JDK 17 or higher
-- [Node.js 16+](https://nodejs.org/) — Includes npm (needed for Angular)
-- [PostgreSQL 14+](https://www.postgresql.org/download/) — The database
-- [Git](https://git-scm.com/) — To clone the project
-- A code editor like [VS Code](https://code.visualstudio.com/) (recommended)
+> [!NOTE]
+> **Evolutionary Project: The Foundational Knowledge Engine**
+> This repository is the foundational **secondBrain** platform, featuring an interactive force-directed knowledge graph and bi-directional note linking.
+> If you are looking for the AI-augmented edition with **Google Gemini RAG** and vector embeddings, visit **[Smart-SecondBrain](https://github.com/tanmayythakare/Smart-SecondBrain)**. For a lightweight, zero-AI variant, check out **[lifeos](https://github.com/tanmayythakare/lifeos)**.
 
 ---
 
-## 🚀 Installation & Setup
+## Quick Flow
 
-### Step 1 — Clone the Repository
-
-```bash
-git clone https://github.com/justTanmay/secondbrain.git
-cd secondbrain
+```
+JWT Auth  →  Create Notes & Tasks  →  Bi-Directional Linking  →  Force-Directed Graph  →  Backlink Discovery
 ```
 
 ---
 
-### Step 2 — Set Up the Database
+## Visual Showcase
 
-1. Open your PostgreSQL client (e.g., pgAdmin or the terminal).
-2. Create a new database and user:
+| Interactive Knowledge Graph | Note Workspace and Content Editor |
+| :---: | :---: |
+| ![Knowledge Graph](docs/screenshots/graph.png) | ![Notes Workspace](docs/screenshots/notes.png) |
+| **Connected Note Details and Backlinks** | **Personal Task Board** |
+| ![Note Details](docs/screenshots/notes2.png) | ![Task Board](docs/screenshots/tasks.png) |
 
+---
+
+## System Architecture
+
+```mermaid
+flowchart TD
+    Client["Browser / Angular 12.2 SPA<br/>(:4200)"]
+    GraphEngine["Force-Directed Graph Engine<br/>(force-graph Canvas Renderer)"]
+    API["Spring Boot 3.2 REST API<br/>(:8080)"]
+    Security["Spring Security + JWT Filter<br/>(Stateless Bearer Tokens)"]
+    JPA["Spring Data JPA / Hibernate<br/>(Transactional Integrity)"]
+    DB[("PostgreSQL Database<br/>(:5432)")]
+
+    Client --> GraphEngine
+    Client -->|"REST Requests + JWT"| API
+    API --> Security
+    Security --> JPA
+    JPA -->|"Entity CRUD & Link Queries"| DB
+```
+
+---
+
+## Overview
+
+SecondBrain is an interconnected personal productivity system designed to break down the silos between notes and tasks. Rather than keeping thoughts in isolated lists, SecondBrain treats every note as a node in an interconnected web of thoughts, allowing you to discover organic relationships between ideas.
+
+### Problem and Solution
+1. **Isolated Thought Silos**: Standard note apps bury ideas in nested folders. SecondBrain links notes bi-directionally so related topics surface naturally.
+2. **Visual Idea Navigation**: An interactive force-directed graph gives you a topological bird's-eye view of your entire knowledge base.
+3. **Integrated Action Items**: Tasks exist alongside your notes, providing single-pane personal workflow management.
+
+---
+
+## Core Architectural Modules
+
+### 01. Bi-Directional Note Linking and Backlink Resolution
+* **Explicit Graph Relationships**: Link any note to another with source and target associations.
+* **Automated Backlink Discovery**: When reading a note, all other notes that reference it are automatically retrieved and surfaced.
+* **Full-Text Content Search**: Instant parameterized filtering across titles and note bodies.
+
+### 02. Interactive Force-Directed Knowledge Graph
+* **Canvas-Rendered Topological Graph**: Powered by `force-graph`, rendering real-time physics-based node clustering based on relationship density.
+* **Interactive Navigation**: Drag, zoom, and select nodes to highlight neighbor connections and jump directly into note edit workspaces.
+
+### 03. High-Throughput Task Lifecycle
+* **Task State Progression**: Manage action items with inline status toggling (`TODO` ➔ `IN_PROGRESS` ➔ `DONE`).
+* **Confirmation-Guarded Actions**: Transactional task creation and deletion preventing accidental loss.
+
+### 04. Multi-Tenant Security and Isolation
+* **Stateless JWT Security**: BCrypt password encryption with secure token verification on all protected endpoints.
+* **Strict User Tenancy**: Every query isolates entities by authenticated user identifier; no user can see or traverse another user's knowledge graph.
+
+---
+
+## Tech Stack
+
+### Backend
+| Technology | Version | Purpose |
+| :--- | :--- | :--- |
+| **Java** | 17 LTS | Programming language |
+| **Spring Boot** | 3.2.x | Backend application framework |
+| **Spring Security** | 6.x | Stateless JWT authentication & endpoint authorization |
+| **Spring Data JPA** | 3.x | Hibernate Object-Relational Mapping |
+| **PostgreSQL** | 14+ | Primary relational datastore |
+| **SpringDoc OpenAPI** | 2.3.0 | Swagger UI interactive API contracts |
+| **JJWT** | 0.11.5 | Token encoding and parsing |
+| **Maven** | 3.x | Build and dependency automation |
+
+### Frontend
+| Technology | Version | Purpose |
+| :--- | :--- | :--- |
+| **Angular** | 12.2 | Single Page Application framework |
+| **TypeScript** | 4.3 | Type-safe client development |
+| **force-graph** | 1.51 | Interactive HTML5 Canvas graph visualizer |
+| **RxJS** | 6.6 | Reactive state and HTTP event streams |
+| **CSS3** | — | Custom dark and light theme styles |
+
+---
+
+## Prerequisites
+
+Ensure the following tools are available locally:
+
+* [Java 17 JDK](https://adoptium.net/) or higher
+* [Node.js 18+](https://nodejs.org/) (includes `npm`)
+* [PostgreSQL 14+](https://www.postgresql.org/download/)
+* [Git](https://git-scm.com/)
+
+---
+
+## Installation and Setup
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/tanmayythakare/secondBrain.git
+cd secondBrain
+```
+
+### 2. Set Up Database
+Open PostgreSQL and initialize the database:
 ```sql
 CREATE DATABASE secondbrain_db;
-CREATE USER secondbrain_user WITH PASSWORD 'secondbrain';
+CREATE USER secondbrain_user WITH PASSWORD 'secondbrain_pass';
 GRANT ALL PRIVILEGES ON DATABASE secondbrain_db TO secondbrain_user;
 ```
 
-> Spring Boot with `ddl-auto=update` will automatically create all tables when the backend starts — you don't need to create them manually!
-
----
-
-### Step 3 — Configure the Backend
-
-1. Navigate to the backend folder:
-
-```bash
-cd backend
-```
-
-2. Open the configuration file:
-
-```
-src/main/resources/application.properties
-```
-
-3. The default values are already set to match the database you created above:
-
+### 3. Configure Backend
+Set environment variables or edit `backend/src/main/resources/application.properties`:
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/secondbrain_db
 spring.datasource.username=secondbrain_user
-spring.datasource.password=secondbrain
-spring.jpa.hibernate.ddl-auto=update
-jwt.secret=secondbrain-secret-key-which-is-very-secure
+spring.datasource.password=secondbrain_pass
+jwt.secret=your_super_secret_jwt_key_at_least_32_characters_long
 ```
 
-> ⚠️ **For production**, never use these default values. Override them with environment variables and activate the `prod` profile.
-
----
-
-### Step 4 — Run the Backend
-
-From inside the `backend` folder, run:
-
+### 4. Run Backend
 ```bash
-# On Mac/Linux
-./mvnw spring-boot:run
-
-# On Windows
-mvnw.cmd spring-boot:run
+cd backend
+mvn spring-boot:run
 ```
+The backend initializes on **http://localhost:8080**. Interactive Swagger documentation is available at **http://localhost:8080/swagger-ui.html**.
 
-You should see the server start on **http://localhost:8080**
-
-Swagger UI (interactive API docs): **http://localhost:8080/swagger-ui.html**
-
-> The first run will take a few minutes as Maven downloads all dependencies.
-
----
-
-### Step 5 — Run the Frontend
-
-Open a **new terminal** and navigate to the frontend folder:
-
+### 5. Run Frontend
+In a new terminal window:
 ```bash
 cd frontend/secondbrain-frontend
-```
-
-Install dependencies (first time only):
-
-```bash
 npm install
-```
-
-Start the development server:
-
-```bash
 npm start
 ```
-
-The app will open at **http://localhost:4200** 🎉
-
----
-
-## 🖥️ Usage
-
-1. **Login** — Go to `http://localhost:4200` and sign in. (Registration is handled directly via the API for now — see the API section below.)
-
-2. **Manage Tasks** — Click **Tasks** in the top nav to create, edit, and delete your tasks.
-
-3. **Write Notes** — Click **Notes** in the top nav to create notes. Use the search bar to find notes by title or content.
-
-4. **Link Notes** — On any note card, click **Link** to connect it to another note using its ID.
-
-5. **Explore the Graph** — Click **Graph** in the top nav to open the knowledge graph. Each node is a note; arrows show connections. Click a node to open that note.
+The Angular application starts on **http://localhost:4200**.
 
 ---
 
-## 📁 Folder Structure
+## API Reference
+
+All protected endpoints require an `Authorization: Bearer <token>` header:
+
+| Method | Endpoint | Description | Auth Required |
+| :--- | :--- | :--- | :---: |
+| `POST` | `/api/auth/register` | Register new user account | No |
+| `POST` | `/api/auth/login` | Authenticate and obtain JWT token | No |
+| `GET` | `/api/tasks` | Retrieve tasks for authenticated user | Yes |
+| `POST` | `/api/tasks` | Create new task | Yes |
+| `PUT` | `/api/tasks/{id}` | Update task details | Yes |
+| `DELETE` | `/api/tasks/{id}` | Remove task | Yes |
+| `GET` | `/api/notes` | Retrieve user notes | Yes |
+| `POST` | `/api/notes` | Create new note | Yes |
+| `PUT` | `/api/notes/{id}` | Update note title and content | Yes |
+| `DELETE` | `/api/notes/{id}` | Remove note | Yes |
+| `GET` | `/api/notes/search?q={query}` | Search notes by keyword | Yes |
+| `POST` | `/api/note-links?sourceId=X&targetId=Y` | Create directional link between notes | Yes |
+| `GET` | `/api/note-links/{noteId}` | Fetch outgoing linked notes | Yes |
+| `GET` | `/api/note-links/backlinks/{noteId}` | Fetch inbound backlinks for note | Yes |
+
+---
+
+## Repository Structure
 
 ```
-secondbrain/
-│
-├── backend/                         # Spring Boot backend
-│   ├── Dockerfile                   # Multi-stage production Docker build
-│   ├── pom.xml                      # Maven dependencies
-│   └── src/main/java/com/example/backend/
-│       ├── controller/              # REST API endpoints
-│       │   ├── AuthController.java
-│       │   ├── TaskController.java
-│       │   ├── NoteController.java
-│       │   └── NoteLinkController.java
-│       ├── service/                 # Business logic
-│       ├── repository/              # Database queries (JPA)
-│       ├── model/                   # Database entity models
-│       ├── dto/                     # Data transfer objects
-│       ├── security/                # JWT filter, util, and SecurityConfig
-│       ├── exception/               # Global error handling
-│       └── config/                  # OpenAPI / Swagger configuration
-│   └── src/main/resources/
-│       ├── application.properties   # Default (local) configuration
-│       └── application-prod.properties  # Production configuration
-│
-└── frontend/secondbrain-frontend/   # Angular frontend
-    └── src/app/
-        ├── core/                    # Guards and HTTP interceptors
-        │   ├── guards/              # AuthGuard (route protection)
-        │   └── interceptors/        # JwtInterceptor (auto-attach token)
-        ├── features/                # Pages and feature modules
-        │   ├── auth/                # Login component & AuthService
-        │   ├── tasks/               # Task list component & TaskService
-        │   └── notes/               # Note list, note graph & NoteService
-        └── environments/            # API URL configuration (local / prod)
+secondBrain/
+├── backend/                      # Spring Boot 3.2 REST API (Java 17)
+│   ├── src/main/java/            # Controllers, Services, Entities, Repositories
+│   ├── src/main/resources/       # application.properties & SQL migrations
+│   └── pom.xml                   # Maven dependencies
+├── frontend/                     # Angular Single-Page Application
+│   └── secondbrain-frontend/     # Angular 12 source files
+│       ├── src/app/              # Auth, Tasks, Notes & Knowledge Graph features
+│       └── package.json          # Frontend dependencies (force-graph)
+└── docs/
+    └── screenshots/              # System UI captures and graph visualizations
 ```
 
 ---
 
-## 📸 Screenshots
+## Contributing
 
-> _Screenshots coming soon!_
-
-| Page | Preview |
-|---|---|
-| Login | ![Login](docs/screenshots/login.png) |
-| Tasks | ![Tasks](docs/screenshots/tasks.png) |
-| Notes | ![Notes](docs/screenshots/notes.png) |
-| Notes | ![Notes](docs/screenshots/notes2.png) |
-| Knowledge Graph | ![Graph](docs/screenshots/graph.png) |
-
----
-
-## 🔌 API Overview
-
-The backend exposes a REST API. All endpoints except auth require an `Authorization: Bearer <token>` header.
-
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/auth/register` | Register a new user |
-| POST | `/api/auth/login` | Login and receive a JWT token |
-| GET | `/api/tasks` | Get all tasks for the current user |
-| POST | `/api/tasks` | Create a new task |
-| PUT | `/api/tasks/{id}` | Update a task |
-| DELETE | `/api/tasks/{id}` | Delete a task |
-| GET | `/api/notes` | Get all notes for the current user |
-| POST | `/api/notes` | Create a new note |
-| PUT | `/api/notes/{id}` | Update a note |
-| DELETE | `/api/notes/{id}` | Delete a note |
-| GET | `/api/notes/search?q={query}` | Full-text search across notes |
-| POST | `/api/note-links?sourceId=X&targetId=Y` | Link two notes |
-| GET | `/api/note-links/{noteId}` | Get notes linked from this note |
-| GET | `/api/note-links/backlinks/{noteId}` | Get notes that link to this note |
-
-> Full interactive docs available at: **http://localhost:8080/swagger-ui.html**
-
----
-
-## 🔮 Future Improvements
-
-Here are some features planned for future versions:
-
-- [ ] 📝 Registration page in the UI (currently API-only)
-- [ ] 🌙 Dark mode support
-- [ ] 🏷️ Tags and categories for notes and tasks
-- [ ] 📅 Task due dates and priority levels in the UI
-- [ ] 🔁 Recurring tasks support
-- [ ] 📤 Export notes as Markdown or PDF
-- [ ] 🔔 Notifications and reminders
-- [ ] 📊 Analytics dashboard (task completion trends, note activity)
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Here's how to get started:
-
-1. **Fork** the repository on GitHub
-2. **Clone** your fork locally:
+1. Fork the repository.
+2. Clone your fork:
    ```bash
-   git clone https://github.com/your-username/secondbrain.git
+   git clone https://github.com/tanmayythakare/secondBrain.git
    ```
-3. **Create a new branch** for your feature:
+3. Create your feature branch:
    ```bash
-   git checkout -b feature/your-feature-name
+   git checkout -b feat/your-feature-name
    ```
-4. **Make your changes** and commit them:
+4. Commit your changes:
    ```bash
-   git commit -m "Add: description of your change"
+   git commit -m "feat: add descriptive feature summary"
    ```
-5. **Push** to your fork:
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-6. Open a **Pull Request** on GitHub
-
-### Guidelines
-- Follow the existing code style
-- Write clear commit messages
-- Test your changes before submitting
-- Keep pull requests focused on one feature or fix
+5. Push to your branch and submit a Pull Request.
 
 ---
 
-## 🐛 Known Issues / Troubleshooting
+## License
 
-**"Cannot connect to server" on login**
-→ Make sure the backend is running on port 8080 and PostgreSQL is running.
-
-**"Access Denied" errors after a while**
-→ Your JWT token has expired (24-hour expiry). Log out and log back in.
-
-**Build fails with Java version error**
-→ Make sure you have Java 17 or higher installed. Run `java -version` to check.
-
-**npm install fails**
-→ Try deleting the `node_modules` folder and running `npm install` again.
-
-**Knowledge graph is empty**
-→ You need to create at least two notes and link them together before the graph will show connections.
+This project is open-source and distributed under the **[MIT License](LICENSE)**.
 
 ---
 
-## 📄 License
-
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
-
-You are free to use, modify, and distribute this project for personal or commercial use.
-
----
-
-## 👤 Author
+## Author
 
 **Tanmay Thakare**
-
-- GitHub: [@justTanmay](https://github.com/justTanmay)
-- LinkedIn: [linkedin.com/in/tanmaythakare](https://www.linkedin.com/in/tanmaythakare/)
-- Email: tanmayrthakare@gmail.com
+* GitHub: [@tanmayythakare](https://github.com/tanmayythakare)
+* Email: [tanmayrthakare@gmail.com](mailto:tanmayrthakare@gmail.com)
+* LinkedIn: [Tanmay Thakare](https://www.linkedin.com/in/tanmaythakare)
 
 ---
 
 <div align="center">
-
-Made with ❤️ and ☕ | If you find this project useful, please ⭐ star the repository!
-
+  <a href="https://github.com/tanmayythakare">
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=16&pause=2000&color=38BDF8&center=true&vCenter=true&width=360&lines=Built+by+Tanmay+Thakare+%F0%9F%90%B1" alt="Built by Tanmay Thakare 🐱" />
+  </a>
 </div>
